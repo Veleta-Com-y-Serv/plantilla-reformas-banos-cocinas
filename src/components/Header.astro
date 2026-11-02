@@ -1,0 +1,81 @@
+---
+// Cabecera fija a todo el ancho: inicial en un azulejo + nombre en serif (o logo), menú, botón de WhatsApp
+// (solo el icono hasta 1280 px; sale si hay contacto.whatsapp) y el botón de site.yaml. Debajo, el listón de madera.
+// En la portada, si la primera sección es `hero`, va transparente sobre la foto y se vuelve blanca al bajar
+// (unas líneas de JavaScript; sin JavaScript se queda transparente, legible sobre el velo del hero).
+// En el resto de páginas es sólida y deja su hueco. Menú móvil plegable sin JavaScript (<details>).
+// Aspecto en src/styles/global.css (.cabecera-agua).
+import { site, tel, whatsapp, seccionesActivas } from '../data/site';
+import type { Enlace } from '../data/site';
+import Icono from './ui/Icono.astro';
+interface Props { variante?: string; cta?: Enlace | null }
+const { cta = null } = Astro.props;
+const c = site.contacto;
+const ruta = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const sobreHero = ruta === '/' && seccionesActivas()[0] === 'hero';
+const wa = whatsapp(c.whatsapp);
+---
+
+<header class="cabecera cabecera-agua" data-sobre={sobreHero ? '' : undefined}>
+  <div class="contenedor cabecera-fila">
+    <a href="/" class="marca" aria-label={`${site.nombre}, inicio`}>
+      {
+        site.logo ? (
+          <img src={site.logo} alt={site.nombre} class="marca-logo" width="160" height="40" />
+        ) : (
+          <>
+            <span class="marca-pieza" aria-hidden="true">{site.nombre.trim().charAt(0)}</span>
+            <span class="marca-nombre">{site.nombre}</span>
+          </>
+        )
+      }
+    </a>
+    <nav class="cabecera-nav" aria-label="Menú principal">
+      {site.menu.map((e) => <a href={e.url}>{e.texto}</a>)}
+    </nav>
+    {
+      wa && (
+        <a class="cabecera-wa" href={wa} rel="noopener" target="_blank" aria-label={`WhatsApp ${c.whatsapp}`}>
+          <Icono nombre="whatsapp" tam={20} />
+          <span class="cabecera-wa-texto">WhatsApp</span>
+        </a>
+      )
+    }
+    {cta && cta.url && <a href={cta.url} class="btn cabecera-cta">{cta.texto}</a>}
+    {
+      (site.menu.length > 0 || (cta && cta.url)) && (
+        <details class="menu-movil">
+          <summary>
+            <span class="menu-movil-icono" aria-hidden="true" />
+            <span>Menú</span>
+          </summary>
+          <nav class="menu-movil-panel" aria-label="Menú">
+            {site.menu.map((e) => <a href={e.url}>{e.texto}</a>)}
+            {c.telefono && <a href={tel(c.telefono)}>{c.telefono}</a>}
+            {cta && cta.url && <a href={cta.url} class="btn">{cta.texto}</a>}
+          </nav>
+        </details>
+      )
+    }
+  </div>
+  <span class="liston" aria-hidden="true"></span>
+</header>
+{!sobreHero && <div class="cabecera-hueco" aria-hidden="true" />}
+<script is:inline>
+  (function () {
+    var h = document.querySelector('.cabecera-agua');
+    if (!h) return;
+    var d = h.querySelector('.menu-movil');
+    if (h.hasAttribute('data-sobre')) {
+      var f = function () { h.classList.toggle('solida', window.scrollY > 40); };
+      f();
+      window.addEventListener('scroll', f, { passive: true });
+    }
+    if (d) {
+      d.addEventListener('toggle', function () { h.classList.toggle('abierta', d.open); });
+      d.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { d.open = false; });
+      });
+    }
+  })();
+</script>

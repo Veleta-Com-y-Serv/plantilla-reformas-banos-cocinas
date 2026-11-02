@@ -1,0 +1,85 @@
+---
+// Contacto: fila partida a sangre. A la izquierda, titular, el teléfono en serif enorme, botón de WhatsApp y los
+// datos (email, dirección y horario de site.yaml → contacto) con iconos en piezas de azulejo; a la derecha (debajo
+// en móvil), `imagen` que toca el borde. Si la sección «presupuesto» no está activa, a la derecha va el formulario
+// corto sobre banda de agua.
+import { seccion, site, tel, whatsapp, mapa } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+import Imagen from '../ui/Imagen.astro';
+import FormularioContacto from '../ui/FormularioContacto.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const c = site.contacto;
+const conFormulario = !seccion('presupuesto');
+const botonForm = (s?.boton_formulario as string) || undefined;
+const lado = conFormulario || Boolean(s?.imagen);
+---
+
+{
+  s && (
+    <section id={id} class:list={['banda-clara', lado ? 'partida' : 'seccion']}>
+      <div class:list={[lado ? 'partida-texto contacto-lado' : 'contenedor']}>
+        <div>
+          <Titular class="!mb-8" antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+          {c.telefono && <a class="contacto-tel" href={tel(c.telefono)}>{c.telefono}</a>}
+          {c.whatsapp && (
+            <p class="mb-8">
+              <a class="btn" href={whatsapp(c.whatsapp)} rel="noopener" target="_blank">
+                <Icono nombre="whatsapp" tam={20} />
+                Escríbeme por WhatsApp
+              </a>
+            </p>
+          )}
+          <ul class="datos">
+            {c.email && (
+              <li>
+                <a class="dato" href={`mailto:${c.email}`}>
+                  <span class="pieza"><Icono nombre="correo" tam={18} /></span>
+                  <span class="break-all">{c.email}</span>
+                </a>
+              </li>
+            )}
+            {c.direccion && (
+              <li>
+                <a class="dato" href={mapa(c.direccion)} rel="noopener" target="_blank">
+                  <span class="pieza"><Icono nombre="mapa" tam={18} /></span>
+                  <span>{c.direccion}</span>
+                </a>
+              </li>
+            )}
+            {c.horario && (
+              <li>
+                <p class="dato">
+                  <span class="pieza"><Icono nombre="reloj" tam={18} /></span>
+                  <span>{c.horario}</span>
+                </p>
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
+      {lado && (conFormulario ? (
+        <div class="partida-texto banda-agua">
+          <div>
+            <FormularioContacto modelo="corto" prefijo={`${id}-f`} boton={botonForm} />
+          </div>
+        </div>
+      ) : (
+        <div class="partida-foto">
+          <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1200} alto={900} />
+        </div>
+      ))}
+    </section>
+  )
+}
+
+<style>
+  .contacto-tel { display: inline-block; margin-bottom: 1.5rem; font-family: var(--fuente-titulos); font-size: clamp(2.6rem, 7vw, 5rem); letter-spacing: -0.02em; line-height: 1; text-decoration: none; color: var(--c-primario); }
+  .contacto-tel:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 8px; }
+  .datos { display: grid; border-top: 1px solid var(--linea); }
+  .dato { display: flex; align-items: center; gap: 1rem; min-height: 3rem; padding: 1rem 0; border-bottom: 1px solid var(--linea); text-decoration: none; font-weight: 550; overflow-wrap: anywhere; }
+  a.dato:hover { color: var(--c-primario); }
+</style>

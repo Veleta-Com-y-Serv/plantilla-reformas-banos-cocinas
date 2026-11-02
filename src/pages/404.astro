@@ -1,0 +1,23 @@
+---
+// Página no encontrada con el diseño de la plantilla: banda verde agua hondo a todo el ancho con juntas de
+// azulejo, un 404 enorme en serif cursiva y una cota de obra que «no cuadra».
+import Base from '../layouts/Base.astro';
+---
+
+<Base titulo="Página no encontrada">
+  <section class="error banda-hondo azulejo">
+    <div class="contenedor error-cuerpo">
+      <p class="antetitulo">Error 404</p>
+      <p class="error-numero" aria-hidden="true">404</p>
+      <h1 class="titulo-seccion">Esta medida no cuadra</h1>
+      <p class="mt-5 max-w-xl text-lg opacity-85">Puede que el enlace esté mal o que la página se haya movido.</p>
+      <p class="mt-9"><a class="btn" href="/">Volver al inicio</a></p>
+    </div>
+  </section>
+  <span class="liston" aria-hidden="true"></span>
+</Base>
+
+<style>
+  .error { min-height: 78svh; display: flex; align-items: center; padding-block: 5rem 6rem; }
+  .error-numero { margin-top: 1rem; font-family: var(--fuente-titulos); font-style: italic; font-size: clamp(6rem, 30vw, 16rem); line-height: .85; letter-spacing: -0.03em; color: var(--c-acento); }
+</style>

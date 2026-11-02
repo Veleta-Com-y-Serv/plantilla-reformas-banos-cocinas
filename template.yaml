@@ -1,0 +1,94 @@
+# Metadatos de la plantilla para el catálogo de NoExpertise.
+id: reformas-banos-cocinas
+nombre: Reformas de baños y cocinas
+descripcion: "Web luminosa para quien reforma baños y cocinas: packs con precio, obras hechas, financiación y WhatsApp."
+sectores:
+  - { id: reformas, nombre: Reformas }
+  - { id: banos, nombre: Baños }
+  - { id: cocinas, nombre: Cocinas }
+  - { id: reformas-integrales, nombre: Reformas integrales }
+  - { id: interiorismo-reformas, nombre: Interiorismo y reformas }
+secciones:
+  - { id: hero, nombre: Portada }
+  - { id: packs, nombre: Packs con precio }
+  - { id: trabajos, nombre: Trabajos hechos }
+  - { id: proceso, nombre: Cómo trabajo }
+  - { id: materiales, nombre: Materiales }
+  - { id: financiacion, nombre: Financiación }
+  - { id: zonas, nombre: Zonas de trabajo }
+  - { id: opiniones, nombre: Opiniones }
+  - { id: preguntas, nombre: Preguntas frecuentes }
+  - { id: presupuesto, nombre: Presupuesto }
+  - { id: contacto, nombre: Contacto }
+estilo: limpio
+plan_minimo: gratis
+version: 1.0.0
+base: astrowind
+demo_url: https://demo-plantilla-reformas-banos-cocinas.noexpertise.com
+activa: true
+orden: 610
+
+# Asistente de puesta en marcha (NoExpertise): un paso por pantalla. Rutas del site sin índices;
+# tipos: texto y lista (la IA propone), datos, fotos, eleccion (colores y logo) y repaso.
+asistente:
+  - id: negocio
+    titulo: "Tú y tu trabajo"
+    pregunta: "¿Cómo te llamas, cómo se llama tu negocio y qué reformas haces?"
+    ayuda: "Baños, cocinas, cambio de bañera por ducha, reformas integrales… y en qué zona trabajas. Habla en primera persona, como hablarías con un cliente."
+    tipo: texto
+    campos: [nombre, eslogan, seo.titulo, seo.descripcion, secciones.hero.antetitulo, secciones.hero.titulo, secciones.hero.texto, secciones.hero.destacado.titulo, secciones.hero.destacado.texto]
+  - id: contacto
+    titulo: "Cómo te encuentran"
+    pregunta: "¿Cómo te pueden llamar o escribir? El WhatsApp es lo que más usan tus clientes."
+    ayuda: "Solo lo que quieras que vean. Lo que dejes vacío no sale en tu web."
+    tipo: datos
+    campos: [contacto.telefono, contacto.whatsapp, contacto.email, contacto.direccion, contacto.horario, redes.instagram, redes.facebook]
+  - id: packs
+    titulo: "Tus packs"
+    pregunta: "¿Qué reformas ofreces con un precio de partida? Una por línea: qué incluye, cuánto tarda y desde cuánto, si quieres decirlo."
+    ayuda: "Si no quieres poner precios, déjalos en blanco: no saldrán."
+    tipo: lista
+    campos: [secciones.packs.packs]
+  - id: trabajos
+    titulo: "Trabajos hechos"
+    pregunta: "Cuéntame algunas obras que hayas terminado: qué hiciste, si era baño o cocina y en qué pueblo. Una por línea."
+    ayuda: "Las fotos las pones luego en Contenido. Mejor sin caras ni datos de tus clientes."
+    tipo: lista
+    campos: [secciones.trabajos.trabajos]
+  - id: materiales
+    titulo: "Materiales"
+    pregunta: "¿Con qué materiales trabajas más y por qué los recomiendas? Uno por línea."
+    ayuda: "Porcelánico, platos de ducha, encimeras, madera… Las fotos las pones luego en Contenido."
+    tipo: lista
+    campos: [secciones.materiales.items]
+  - id: financiacion
+    titulo: "Formas de pago"
+    pregunta: "¿Cómo se te puede pagar? Plazos, financiación con una entidad, señal…"
+    ayuda: "Sin cifras que no puedas cumplir: basta con decir qué opciones das."
+    tipo: texto
+    campos: [secciones.financiacion.titulo, secciones.financiacion.texto, secciones.financiacion.items, secciones.financiacion.nota]
+  - id: zonas
+    titulo: "Dónde trabajas"
+    pregunta: "¿En qué pueblos, barrios o comarcas haces obras?"
+    tipo: texto
+    campos: [secciones.zonas.titulo, secciones.zonas.texto, secciones.zonas.items]
+  - id: preguntas
+    titulo: "Preguntas frecuentes"
+    pregunta: "¿Qué te preguntan siempre antes de empezar una obra? Escribe cada pregunta y lo que respondes."
+    ayuda: "Si lo prefieres, añádelas luego en Contenido."
+    tipo: lista
+    campos: [secciones.preguntas.preguntas]
+  - id: fotos
+    titulo: "Tus fotos"
+    pregunta: "Pon una foto de portada (un baño o una cocina que hayas terminado queda muy bien) y, si quieres, alguna más."
+    ayuda: "Sube las tuyas o elige una del banco. Las que no cambies se quedan como están."
+    tipo: fotos
+    campos: [secciones.hero.imagen, secciones.financiacion.imagen, secciones.contacto.imagen]
+  - id: aspecto
+    titulo: "Colores y logo"
+    pregunta: "Elige los colores de tu web y, si tienes, tu logo."
+    tipo: eleccion
+    campos: [colores.primario, colores.acento, logo]
+  - id: repaso
+    titulo: "Repaso"
+    tipo: repaso

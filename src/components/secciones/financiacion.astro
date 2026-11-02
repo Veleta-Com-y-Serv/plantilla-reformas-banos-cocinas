@@ -1,0 +1,58 @@
+---
+// Financiación: fila partida a sangre. A la izquierda, `imagen` que toca el borde de la ventana; a la derecha,
+// banda verde agua hondo con titular, `items: [{titulo, texto}]` en filas numeradas (01, 02…) entre filetes,
+// `nota` (aviso legal de la financiación) y `cta`. Sin foto, la banda hondo ocupa todo el ancho con el texto en
+// dos columnas. Sin cifras en el componente: los plazos los pone el cliente en site.yaml.
+import { seccion } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const items = s ? s.items.filter((it) => it && it.titulo) : [];
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class:list={['banda-hondo', s.imagen ? 'partida' : 'seccion']}>
+      {s.imagen && (
+        <div class="partida-foto">
+          <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1200} alto={900} />
+        </div>
+      )}
+      <div class:list={[s.imagen ? 'partida-texto' : 'contenedor financia-rejilla']}>
+        <div>
+          <Titular class="!mb-8" antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+        </div>
+        <div>
+          {items.length > 0 && (
+            <ol class="financia">
+              {items.map((it, i) => (
+                <li>
+                  <span class="financia-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <div>
+                    <h3 class="financia-titulo">{it.titulo}</h3>
+                    {it.texto && <p class="financia-texto">{it.texto}</p>}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          )}
+          {s.nota && <p class="financia-nota">{s.nota}</p>}
+          {s.cta && <a class="btn mt-8" href={s.cta.url}>{s.cta.texto}</a>}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .financia-rejilla { display: grid; gap: 1rem; }
+  @media (min-width: 1024px) { .financia-rejilla { grid-template-columns: 1fr 1.2fr; gap: 5rem; } }
+  .financia { border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+  .financia li { display: flex; gap: 1.25rem; padding: 1.4rem 0; border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+  .financia-num { flex-shrink: 0; width: 2.75rem; font-family: var(--fuente-titulos); font-style: italic; font-size: 1.75rem; line-height: 1.1; color: var(--c-acento); }
+  .financia-titulo { font-size: 1.5rem; }
+  .financia-texto { margin-top: .35rem; opacity: .85; }
+  .financia-nota { margin-top: 1.5rem; font-size: .9rem; opacity: .75; }
+</style>

@@ -1,0 +1,49 @@
+---
+// Zonas de trabajo: banda clara a todo el ancho. A la izquierda, titular, `texto` y `cta`; a la derecha, las
+// localidades (`items: [{titulo}]`) en serif grande, seguidas y separadas por una pieza de azulejo pequeña, como
+// una lista de rótulos. Con `imagen`, la foto va debajo a sangre en una franja panorámica. Las primeras 8
+// localidades salen también en el pie. Sin localidades, solo el titular.
+import { seccion } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const pueblos = s ? s.items.filter((it) => it && it.titulo) : [];
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class="banda-clara zonas">
+      <div class="seccion">
+        <div class="contenedor zonas-rejilla">
+          <div>
+            <Titular class="!mb-0" antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+            {s.cta && <a class="btn mt-8" href={s.cta.url}>{s.cta.texto}</a>}
+          </div>
+          {pueblos.length > 0 && (
+            <ul class="rotulos">
+              {pueblos.map((p) => <li>{p.titulo}</li>)}
+            </ul>
+          )}
+        </div>
+      </div>
+      {s.imagen && (
+        <div class="zonas-franja">
+          <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1920} alto={640} />
+        </div>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .zonas-rejilla { display: grid; gap: 2.5rem; }
+  @media (min-width: 1024px) { .zonas-rejilla { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 5rem; align-items: center; } }
+  .rotulos { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1.1rem; font-family: var(--fuente-titulos); font-size: clamp(1.55rem, 3.2vw, 2.6rem); line-height: 1.25; }
+  .rotulos li { display: inline-flex; align-items: center; gap: 1.1rem; }
+  .rotulos li:not(:last-child)::after { content: ""; width: .5rem; height: .5rem; border-radius: 2px; background: var(--c-acento); transform: rotate(45deg); }
+  .rotulos li:nth-child(3n + 1) { font-style: italic; color: var(--c-primario); }
+  .zonas-franja { position: relative; height: clamp(12rem, 28vw, 24rem); overflow: hidden; }
+  .zonas-franja :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+</style>

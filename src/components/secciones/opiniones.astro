@@ -1,0 +1,67 @@
+---
+// Opiniones: banda de madera plena a todo el ancho. Titular y, debajo, la primera opinión como cita enorme en
+// serif con una comilla grande; el resto en columnas (2/1) entre filetes. `testimonios: [{texto, autor, nota}]`.
+// No se inventan opiniones: sin testimonios, solo el titular.
+import { seccion } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const lista = s ? s.testimonios.filter((t) => t && t.texto) : [];
+const [primera, ...resto] = lista;
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class="seccion banda-madera">
+      <div class="contenedor">
+        <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+        {primera && (
+          <figure class="cita">
+            <span class="cita-comilla" aria-hidden="true">“</span>
+            <blockquote class="cita-texto">{primera.texto}</blockquote>
+            <figcaption class="cita-autor">
+              <strong>{primera.autor}</strong>
+              {primera.nota && <span>{primera.nota}</span>}
+            </figcaption>
+          </figure>
+        )}
+        {resto.length > 0 && (
+          <ul class="opiniones-resto">
+            {resto.map((t) => (
+              <li>
+                <figure>
+                  <blockquote class="opinion-texto">«{t.texto}»</blockquote>
+                  <figcaption class="cita-autor">
+                    <strong>{t.autor}</strong>
+                    {t.nota && <span>{t.nota}</span>}
+                  </figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .cita { position: relative; padding-top: 2.5rem; }
+  .cita-comilla { position: absolute; top: -1.25rem; left: -.25rem; font-family: var(--fuente-titulos); font-size: 8rem; line-height: 1; opacity: .35; }
+  .cita-texto { position: relative; font-family: var(--fuente-titulos); font-size: clamp(1.7rem, 3.6vw, 3.2rem); line-height: 1.18; letter-spacing: -0.015em; max-width: 30ch; }
+  .cita-autor { display: flex; flex-wrap: wrap; gap: .25rem .9rem; margin-top: 1.5rem; font-size: .95rem; }
+  .cita-autor strong { font-weight: 700; }
+  .cita-autor span { opacity: .78; }
+  .opiniones-resto { display: grid; gap: 0; margin-top: 3.5rem; border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+  .opiniones-resto li { padding: 2rem 0; border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+  .opinion-texto { font-family: var(--fuente-titulos); font-size: clamp(1.25rem, 1.8vw, 1.5rem); line-height: 1.35; }
+  @media (min-width: 768px) {
+    .opiniones-resto { grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+    .opiniones-resto li { padding: 2.25rem 2.5rem 2.5rem 0; border-bottom: 0; }
+    .opiniones-resto li:nth-child(2n) { padding: 2.25rem 0 2.5rem 2.5rem; border-left: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+  }
+  @media (min-width: 1100px) {
+    .cita { display: grid; grid-template-columns: 1fr; padding-left: 7rem; padding-top: 0; }
+    .cita-comilla { top: -2rem; left: 0; font-size: 11rem; }
+  }
+</style>

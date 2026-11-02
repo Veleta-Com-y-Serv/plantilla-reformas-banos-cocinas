@@ -1,0 +1,57 @@
+---
+// Apartado de texto genérico (apartados nuevos del cliente: site.yaml → `tipo: texto`): antetítulo, título,
+// párrafos (separados por una línea en blanco), `items` con una pieza de azulejo y `cta`. Con `imagen`, fila
+// partida a sangre con la foto a la derecha; sin ella, banda de agua con juntas de azulejo a todo el ancho y el
+// texto en dos columnas.
+import { seccion, parrafos } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const items = s ? s.items.filter((it) => it && it.titulo) : [];
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class:list={[s.imagen ? 'banda-clara partida partida--derecha' : 'banda-agua azulejo seccion']}>
+      {s.imagen && (
+        <div class="partida-foto">
+          <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1200} alto={900} />
+        </div>
+      )}
+      <div class:list={[s.imagen ? 'partida-texto' : 'contenedor texto-rejilla']}>
+        <div>
+          {s.antetitulo && <p class="antetitulo">{s.antetitulo}</p>}
+          {s.titulo && <h2 class="titulo-seccion">{s.titulo}</h2>}
+        </div>
+        <div>
+          {parrafos(s.texto).length > 0 && (
+            <div class:list={['space-y-4 text-[1.1rem] opacity-90', { 'mt-6': s.imagen }]}>
+              {parrafos(s.texto).map((p) => <p>{p}</p>)}
+            </div>
+          )}
+          {items.length > 0 && (
+            <ul class="mt-8 grid gap-4">
+              {items.map((it) => (
+                <li class="flex gap-4">
+                  <span class="pieza"><Icono nombre={it.icono || 'check'} tam={18} /></span>
+                  <div>
+                    <p class="font-display text-[1.3rem] leading-tight">{it.titulo}</p>
+                    {it.texto && <p class="mt-1 opacity-80">{it.texto}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          {s.cta?.url && <a class="btn mt-8" href={s.cta.url}>{s.cta.texto}</a>}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .texto-rejilla { display: grid; gap: 1.5rem; }
+  @media (min-width: 1024px) { .texto-rejilla { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; } }
+</style>

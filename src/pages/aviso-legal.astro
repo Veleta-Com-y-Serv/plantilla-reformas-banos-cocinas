@@ -1,0 +1,48 @@
+---
+// Ejemplo de página adicional: usa el layout base y se enlaza desde el pie (o desde site.yaml → menu).
+// Cabecera en banda de agua con juntas de azulejo a todo el ancho y texto legal en una columna de lectura.
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+const c = site.contacto;
+---
+
+<Base titulo="Aviso legal y privacidad" descripcion={`Aviso legal y política de privacidad de ${site.nombre}.`}>
+  <div class="banda-agua azulejo legal-cabeza">
+    <div class="contenedor">
+      <p class="antetitulo">{site.nombre}</p>
+      <h1 class="titulo-seccion">Aviso legal y privacidad</h1>
+    </div>
+  </div>
+  <div class="banda-clara">
+    <article class="contenedor texto-largo legal-cuerpo">
+      <h2>Quién soy</h2>
+      <p>
+        Esta web pertenece a {site.nombre}{c.direccion && `, con domicilio en ${c.direccion}`}. Puedes escribirme a {
+          c.email || 'mi correo de contacto'
+        }{c.telefono && ` o llamarme al ${c.telefono}`}.
+      </p>
+      <h2>Qué datos trato</h2>
+      <p>
+        Solo los que me envías al escribirme o al pedir presupuesto: nombre, teléfono y lo que necesitas. Los uso para
+        responderte y preparar tu presupuesto. No los cedo a nadie salvo obligación legal.
+      </p>
+      <h2>Cuánto tiempo los guardo</h2>
+      <p>El necesario para atender tu consulta y, después, el que marque la ley.</p>
+      <h2>Tus derechos</h2>
+      <p>
+        Puedes pedir acceso, rectificación o supresión de tus datos escribiendo a {c.email || 'mi correo'}. También
+        puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).
+      </p>
+      <h2>Cookies</h2>
+      <p>Esta web no usa cookies de seguimiento.</p>
+      <p class="mt-10"><a class="btn" href="/">Volver al inicio</a></p>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .legal-cabeza { padding-block: 4rem 4.5rem; }
+  @media (min-width: 768px) { .legal-cabeza { padding-block: 6rem; } }
+  .legal-cuerpo { max-width: 52rem; padding-block: 3.5rem 5rem; }
+  @media (min-width: 768px) { .legal-cuerpo { padding-block: 5rem 6.5rem; } }
+</style>

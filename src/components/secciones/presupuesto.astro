@@ -1,0 +1,67 @@
+---
+// Presupuesto: fila partida a sangre en dos colores. A la izquierda, verde agua hondo con juntas de azulejo:
+// titular, `items` (pasos con icono en una pieza), el teléfono en serif grande y `nota` («Sin compromiso»).
+// A la derecha, banda de agua con el formulario corto (nombre, teléfono y qué necesitas; solo texto) que abre el
+// correo y, debajo, el acceso a WhatsApp si hay contacto.whatsapp. `boton_formulario` opcional.
+import { seccion, site, tel, whatsapp } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+import FormularioContacto from '../ui/FormularioContacto.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const items = s ? s.items.filter((it) => it && it.titulo) : [];
+const botonForm = (s?.boton_formulario as string) || undefined;
+const c = site.contacto;
+---
+
+{
+  s && (
+    <section id={id} class="partida">
+      <div class="partida-texto banda-hondo azulejo presupuesto-lado">
+        <div>
+          <Titular class="!mb-9" antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+          {items.length > 0 && (
+            <ol class="grid gap-5">
+              {items.map((it) => (
+                <li class="flex items-start gap-4">
+                  <span class="pieza"><Icono nombre={it.icono || 'check'} tam={18} /></span>
+                  <div>
+                    <p class="font-display text-[1.35rem] leading-tight">{it.titulo}</p>
+                    {it.texto && <p class="mt-1 opacity-80">{it.texto}</p>}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          )}
+          {c.telefono && <a class="presupuesto-tel" href={tel(c.telefono)}>{c.telefono}</a>}
+          {s.nota && <p class="presupuesto-nota">{s.nota}</p>}
+        </div>
+      </div>
+      <div class="partida-texto banda-agua presupuesto-form">
+        <div>
+          <FormularioContacto modelo="corto" prefijo={`${id}-f`} boton={botonForm} />
+          {c.whatsapp && (
+            <p class="mt-6">
+              <a class="btn-sec w-full sm:w-auto" href={whatsapp(c.whatsapp, 'Hola, quería pedir presupuesto para una reforma.')} rel="noopener" target="_blank">
+                <Icono nombre="whatsapp" tam={20} />
+                WhatsApp {c.whatsapp}
+              </a>
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .presupuesto-tel { display: inline-block; margin-top: 2.25rem; font-family: var(--fuente-titulos); font-size: clamp(2.1rem, 4.5vw, 3.2rem); letter-spacing: -0.015em; line-height: 1; text-decoration: none; color: var(--c-acento); }
+  .presupuesto-nota { margin-top: 1rem; font-weight: 600; opacity: .85; }
+  .presupuesto-form :global(.formulario-aviso) { opacity: .75; }
+  .presupuesto-form :global(.campo-check a) { font-weight: 650; }
+  @media (min-width: 1024px) {
+    .presupuesto-lado { display: flex; justify-content: flex-end; }
+    .presupuesto-lado > div { width: 100%; max-width: 40rem; }
+  }
+</style>

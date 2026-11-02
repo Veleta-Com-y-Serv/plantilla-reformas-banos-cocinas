@@ -1,0 +1,78 @@
+---
+// Trabajos hechos: titular en banda clara y, debajo, rejilla de fotos de borde a borde con juntas blancas de
+// 6 px (como un alicatado). `trabajos: [{titulo, texto, lugar, tipo, imagen, imagen_antes}]`: 3 columnas en
+// escritorio, 2 en tableta, 1 en móvil. Cada foto lleva arriba el `tipo` («Baño», «Cocina»…) en una pieza de
+// color y abajo una placa blanca con título en serif, lugar y texto. `imagen_antes` opcional: miniatura en la
+// esquina con la etiqueta `etiqueta_antes` («Antes»). Sin foto, la tesela queda en hondo con juntas de azulejo.
+import { seccion } from '../../data/site';
+import { altFicha } from '../../lib/seo';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const lista = s ? s.trabajos.filter((t) => t && t.titulo) : [];
+const antes = (s?.etiqueta_antes as string) || 'Antes';
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class="banda-clara obras">
+      <div class="contenedor obras-cabeza">
+        <Titular partido antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto}>
+          {s.cta && <a class="btn" href={s.cta.url}>{s.cta.texto}</a>}
+        </Titular>
+      </div>
+      {lista.length > 0 && (
+        <ul class="alicatado">
+          {lista.map((t) => (
+            <li class="obra">
+              <div class:list={['obra-foto banda-hondo', { azulejo: !t.imagen }]}>
+                {t.imagen && <Imagen src={t.imagen} alt={altFicha(t)} ancho={1200} alto={900} />}
+                {t.tipo && <span class="obra-tipo">{t.tipo}</span>}
+                {t.imagen_antes && t.imagen && (
+                  <figure class="obra-antes">
+                    <Imagen src={t.imagen_antes} alt={`${t.titulo}: ${antes.toLowerCase()}`} ancho={320} alto={240} />
+                    <figcaption>{antes}</figcaption>
+                  </figure>
+                )}
+              </div>
+              <div class="obra-placa">
+                <h3 class="obra-titulo">{t.titulo}</h3>
+                {t.lugar && <p class="obra-lugar"><Icono nombre="mapa" tam={15} />{t.lugar}</p>}
+                {t.texto && <p class="obra-texto">{t.texto}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .obras-cabeza { padding-top: var(--ritmo); }
+  @media (min-width: 768px) { .obras-cabeza { padding-top: var(--ritmo-md); } }
+  .obras:not(:has(.alicatado)) { padding-bottom: var(--ritmo); }
+  .alicatado { display: grid; gap: 6px; background: var(--c-fondo); }
+  .obra { position: relative; display: flex; flex-direction: column; background: var(--c-fondo); }
+  .obra-foto { position: relative; overflow: hidden; aspect-ratio: 4 / 3; }
+  .obra-foto > :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+  .obra:hover .obra-foto > :global(img) { transform: scale(1.035); }
+  .obra-tipo { position: absolute; top: 0; left: 1rem; padding: .35rem .8rem; border-radius: 0 0 var(--radio) var(--radio); background: var(--c-primario); color: var(--sobre-primario); font-size: .75rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+  .obra-antes { position: absolute; right: 1rem; bottom: 1rem; width: 7rem; margin: 0; border-radius: var(--radio); overflow: hidden; border: 3px solid #ffffff; box-shadow: 0 10px 22px -10px rgb(0 0 0 / .55); }
+  .obra-antes :global(img) { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .obra-antes figcaption { position: absolute; left: 0; top: 0; padding: .1rem .45rem; font-size: .7rem; font-weight: 700; background: #ffffff; color: #1a1a1a; border-bottom-right-radius: var(--radio); }
+  .obra-placa { padding: 1.4rem 1rem 1.8rem; }
+  .obra-titulo { font-size: 1.6rem; }
+  .obra-lugar { display: inline-flex; align-items: center; gap: .35rem; margin-top: .45rem; font-size: .85rem; font-weight: 650; letter-spacing: .04em; color: var(--c-primario); }
+  .obra-texto { margin-top: .5rem; font-size: .98rem; opacity: .82; max-width: 34rem; }
+  @media (min-width: 768px) {
+    .alicatado { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .obra-placa { padding: 1.5rem 2rem 2.25rem; }
+  }
+  @media (min-width: 1100px) {
+    .alicatado { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .obra-placa { padding: 1.6rem 2.25rem 2.5rem; }
+  }
+</style>

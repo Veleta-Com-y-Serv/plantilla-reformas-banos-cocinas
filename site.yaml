@@ -1,0 +1,170 @@
+# Contenido de la web. Es lo único que rellena la plataforma NoExpertise.
+# Una sola página: el menú apunta a anclas (#id-de-sección).
+# Las secciones se muestran en el orden de este fichero. Para ocultar una: activa: false.
+# Apartado nuevo: un id propio (es su ancla, /#id) con `tipo:` = el diseño de otra sección o `texto`.
+# Listas planas: nunca una lista dentro de un elemento de lista. Precios y cifras, siempre entre comillas.
+nombre: Rubén Carrasco Reformas
+eslogan: "Reformo baños y cocinas en Móstoles y el sur de Madrid. Presupuesto cerrado y obra limpia."
+sector: reformas
+logo: ""          # ruta a una imagen en public/ (p. ej. /logo.svg). Vacío = inicial en un azulejo + nombre.
+colores:
+  primario: "#1f7a70"   # verde agua (botones en bandas claras, banda del proceso, detalles)
+  acento: "#d2ad84"     # madera clara (listones, botones en bandas oscuras, banda de opiniones)
+  fondo: "#ffffff"
+  texto: "#1b2928"      # letra y base de las bandas oscuras (mezclado con el verde agua)
+contacto:
+  telefono: "655 21 84 37"
+  email: hola@rubencarrascoreformas.es
+  direccion: "Calle del Alfarero 14, 28935 Móstoles (Madrid)"
+  horario: "Lunes a viernes, de 8:00 a 19:00. Sábados por la mañana, solo visitas."
+  whatsapp: "+34 655 21 84 37"
+redes:
+  instagram: https://www.instagram.com/
+  facebook: https://www.facebook.com/
+  linkedin: ""
+menu:
+  - { texto: Packs, url: "/#packs" }
+  - { texto: Trabajos, url: "/#trabajos" }
+  - { texto: Cómo trabajo, url: "/#proceso" }
+  - { texto: Financiación, url: "/#financiacion" }
+  - { texto: Preguntas, url: "/#preguntas" }
+  - { texto: Contacto, url: "/#contacto" }
+boton_cabecera: { texto: Presupuesto gratis, url: "/#presupuesto" }
+seo:
+  titulo: Reformas de baños y cocinas en Móstoles · Rubén Carrasco
+  descripcion: "Reformo baños y cocinas en Móstoles, Alcorcón y Fuenlabrada. Packs con precio cerrado, cambio de bañera por ducha en un día y visita gratis."
+  tipo: HomeAndConstructionBusiness
+marca_pie: true
+
+secciones:
+  hero:
+    activa: true
+    antetitulo: Baños y cocinas en Móstoles
+    titulo: Tu baño nuevo, sin sorpresas en la factura
+    texto: "Soy Rubén y llevo quince años reformando baños y cocinas en el sur de Madrid. Voy a medir sin coste, te doy un precio cerrado y la obra la llevo yo de principio a fin."
+    imagen: /fotos/hero.jpg
+    destacado: { titulo: "Soy Rubén, y la obra la hago yo", texto: "Sin subcontratas que cambian cada semana: un solo teléfono, el mío." }
+    cta: { texto: Pide presupuesto gratis, url: "/#presupuesto" }
+    cta_secundario: { texto: Ver trabajos hechos, url: "/#trabajos" }
+    items:
+      - { titulo: Precio cerrado por escrito, icono: documento }
+      - { titulo: Obra limpia y protegida, icono: escudo }
+      - { titulo: "2 años de garantía", icono: check }
+
+  packs:
+    activa: true
+    antetitulo: Packs con precio
+    titulo: Lo que más me piden, con precio de partida
+    texto: "Cada casa es distinta: el precio final te lo doy después de medir. Pero así sabes por dónde empezamos."
+    etiqueta_destacado: El más pedido
+    cta: { texto: Pedir presupuesto, url: "/#presupuesto" }
+    packs:
+      - { nombre: Baño completo, texto: "Lo quito todo y lo dejo nuevo: azulejo, suelo, sanitarios, mueble y ducha o bañera.", precio: "desde 6.900 €", incluye: "Retirada de escombros; Alicatado y solado; Plato de ducha o bañera; Mueble de lavabo y espejo; Fontanería y electricidad nuevas; Limpieza final", duracion: "8-10 días laborables", destacado: true }
+      - { nombre: Cocina completa, texto: "Muebles a medida, encimera y una distribución pensada para cómo cocinas tú.", precio: "desde 9.500 €", incluye: "Diseño en 3D; Muebles a medida; Encimera de cuarzo o porcelánico; Alicatado o pintura; Instalación de electrodomésticos; Luz bajo muebles", duracion: "3 semanas", destacado: false }
+      - { nombre: Cambio de bañera por ducha, texto: "Fuera la bañera y en su sitio un plato extraplano con mampara. Sin tocar el resto del baño.", precio: "desde 1.490 €", incluye: "Retirada de la bañera; Plato extraplano antideslizante; Mampara de vidrio; Azulejo de reposición; Grifería termostática", duracion: "1 día", destacado: false }
+
+  trabajos:
+    activa: true
+    antetitulo: Trabajos hechos
+    titulo: Baños y cocinas que ya están estrenando
+    texto: "Algunas de mis últimas obras. Las fotos son de cuando las entregué."
+    etiqueta_antes: Antes
+    trabajos:
+      - { titulo: Baño de piso de los setenta, tipo: Baño, lugar: "Móstoles centro", texto: "De bañera con azulejo verde a ducha de obra, suelo de madera cerámica y mueble suspendido.", imagen: /fotos/trabajo-bano-mostoles.jpg, imagen_antes: /fotos/trabajo-bano-antes.jpg }
+      - { titulo: Cocina abierta al salón, tipo: Cocina, lugar: Alcorcón, texto: "Tiré el tabique, puse una península con encimera de cuarzo blanco y frentes de roble.", imagen: /fotos/trabajo-cocina-alcorcon.jpg }
+      - { titulo: Ducha en un día, tipo: Baño, lugar: Fuenlabrada, texto: "Cambio de bañera por plato extraplano y mampara fija para una pareja mayor.", imagen: /fotos/trabajo-ducha-fuenlabrada.jpg }
+      - { titulo: Cocina en U con office, tipo: Cocina, lugar: Villaviciosa de Odón, texto: "Muebles verde agua mate, encimera porcelánica y mesa de madera maciza.", imagen: /fotos/trabajo-cocina-villaviciosa.jpg }
+      - { titulo: Aseo pequeño que parece grande, tipo: Baño, lugar: Arroyomolinos, texto: "Azulejo grande claro, espejo de lado a lado y lavabo esquinero.", imagen: /fotos/trabajo-aseo-arroyomolinos.jpg }
+      - { titulo: Cocina lineal de alquiler, tipo: Cocina, lugar: Navalcarnero, texto: "Reforma rápida y resistente para un piso que se alquila: muebles blancos y encimera compacta.", imagen: /fotos/trabajo-cocina-navalcarnero.jpg }
+
+  proceso:
+    activa: true
+    antetitulo: Cómo trabajo
+    titulo: Cuatro pasos y una sola persona al teléfono
+    texto: "Sabes desde el primer día qué se hace, cuánto cuesta y cuándo termino."
+    items:
+      - { titulo: Medición, texto: "Voy a tu casa, mido, miro tuberías y desagües y escucho lo que quieres. Sin coste.", icono: regla }
+      - { titulo: Diseño, texto: "Te enseño la distribución y los materiales, y te doy el presupuesto cerrado en 48 horas.", icono: plano }
+      - { titulo: Obra, texto: "Protejo suelos y muebles, retiro escombros cada día y te mando fotos del avance.", icono: martillo }
+      - { titulo: Entrega, texto: "Repasamos juntos cada detalle, lo dejo limpio y te doy la garantía por escrito.", icono: llave }
+
+  materiales:
+    activa: true
+    antetitulo: Materiales
+    titulo: Materiales que aguantan el agua y los años
+    texto: "Trabajo con fabricantes españoles y te enseño muestras en tu casa antes de elegir."
+    items:
+      - { titulo: Porcelánico, texto: "Para suelos y paredes: no absorbe agua y hay imitación de madera o piedra.", imagen: /fotos/material-porcelanico.jpg }
+      - { titulo: Platos extraplanos, texto: "De resina con textura antideslizante, a ras de suelo.", imagen: /fotos/material-plato.jpg }
+      - { titulo: Encimeras de cuarzo, texto: "Resistentes a las manchas y al calor del día a día.", imagen: /fotos/material-encimera.jpg }
+      - { titulo: Madera tratada, texto: "Frentes y baldas de roble con barniz al agua para baños y cocinas.", imagen: /fotos/material-madera.jpg }
+
+  financiacion:
+    activa: true
+    antetitulo: Financiación
+    titulo: Págalo poco a poco
+    texto: "Una reforma no tiene por qué pagarse de golpe. Te explico las opciones el día que voy a medir."
+    imagen: /fotos/financiacion.jpg
+    items:
+      - { titulo: En tres pagos, texto: "Una parte al empezar, otra a mitad de obra y el resto al entregar. Sin intereses." }
+      - { titulo: "Hasta 24 meses", texto: "Con una entidad financiera, si lo prefieres en cuotas. Lo tramito yo." }
+      - { titulo: Sin sorpresas, texto: "El precio cerrado no cambia aunque la obra se complique por algo que no se veía." }
+    nota: "La financiación en cuotas está sujeta a la aprobación de la entidad."
+    cta: { texto: Pregúntame por tu caso, url: "/#presupuesto" }
+
+  zonas:
+    activa: true
+    antetitulo: Dónde trabajo
+    titulo: Móstoles y el sur de Madrid
+    texto: "Vivo en Móstoles y trabajo a menos de media hora en coche. Si tu pueblo no está, pregúntame."
+    items:
+      - { titulo: Móstoles }
+      - { titulo: Alcorcón }
+      - { titulo: Fuenlabrada }
+      - { titulo: Villaviciosa de Odón }
+      - { titulo: Arroyomolinos }
+      - { titulo: Navalcarnero }
+      - { titulo: Leganés }
+      - { titulo: Boadilla del Monte }
+      - { titulo: Humanes de Madrid }
+      - { titulo: Moraleja de Enmedio }
+
+  opiniones:
+    activa: true
+    antetitulo: Opiniones
+    titulo: Lo que dicen de mi trabajo
+    testimonios:
+      - { texto: "Nos dio un precio y fue el precio. Terminó el baño en nueve días y cada tarde dejaba todo barrido. No parecía que hubiera habido obra.", autor: Marisa y Javier, nota: "Baño completo, Móstoles" }
+      - { texto: "Mi madre ya no podía entrar en la bañera. Rubén vino por la mañana y por la noche ya se estaba duchando.", autor: Alberto G., nota: "Cambio de bañera por ducha, Fuenlabrada" }
+      - { texto: "Nos ayudó a elegir los muebles con un dibujo en 3D. La cocina es exactamente como la imaginamos.", autor: Nerea L., nota: "Cocina completa, Alcorcón" }
+
+  preguntas:
+    activa: true
+    antetitulo: Preguntas frecuentes
+    titulo: Lo que me preguntáis antes de empezar
+    preguntas:
+      - { pregunta: "¿Cuánto cuesta reformar un baño?", respuesta: "Depende de los metros y de los materiales. El pack de baño completo tiene un precio de partida; después de medir te doy el precio cerrado por escrito y no cambia." }
+      - { pregunta: "¿Cuánto tiempo estaré sin baño o sin cocina?", respuesta: "Un baño completo, entre ocho y diez días laborables; una cocina, unas tres semanas. Un cambio de bañera por ducha se hace en un día." }
+      - { pregunta: "¿Necesito licencia del ayuntamiento?", respuesta: "Para una reforma interior suele bastar con una comunicación previa. Te digo qué hace falta en tu municipio y lo presento yo." }
+      - { pregunta: "¿Puedo elegir yo los materiales?", respuesta: "Claro. Te llevo muestras a casa y te acompaño a la exposición si quieres. Si ya tienes los azulejos, los coloco yo." }
+      - { pregunta: "¿Qué pasa con los escombros y el polvo?", respuesta: "Protejo suelos y muebles, cierro la zona de obra y saco los escombros cada día. El último día lo dejo todo limpio." }
+      - { pregunta: "¿La obra tiene garantía?", respuesta: "Sí, dos años de garantía por escrito en la mano de obra, además de la del fabricante en sanitarios, grifos y muebles." }
+
+  presupuesto:
+    activa: true
+    antetitulo: Presupuesto gratis
+    titulo: Cuéntame qué quieres cambiar
+    texto: "Déjame tu nombre y tu teléfono y te llamo yo. Si te corre prisa, escríbeme por WhatsApp."
+    nota: "Sin compromiso. Te contesto en el día."
+    boton_formulario: Pedir presupuesto
+    items:
+      - { titulo: Me escribes o me llamas, texto: "Por aquí, por teléfono o por WhatsApp.", icono: mensaje }
+      - { titulo: Voy a medir sin coste, texto: "Quedamos el día que te venga bien.", icono: regla }
+      - { titulo: Precio cerrado en 48 horas, texto: "Por escrito, con materiales y plazo.", icono: documento }
+
+  contacto:
+    activa: true
+    antetitulo: Contacto
+    titulo: Llámame o escríbeme
+    texto: "Si estoy en una obra y no lo cojo, te devuelvo la llamada en cuanto salga."
+    imagen: /fotos/contacto.jpg

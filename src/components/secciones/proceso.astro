@@ -1,0 +1,73 @@
+---
+// Cómo trabajo: banda verde agua plena. Titular partido y, debajo, la cinta métrica: una regla de borde a borde
+// con marcas cada 12 px (más largas cada 60 px) sobre la que van los pasos (`items: [{titulo, texto, icono}]`),
+// numerados en serif cursiva (01, 02…). En escritorio, en línea (hasta 4 columnas); en móvil, la regla va en
+// vertical a la izquierda y los pasos uno debajo de otro. Sin pasos, solo el titular.
+import { seccion } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const pasos = s ? s.items.filter((it) => it && it.titulo) : [];
+const cols = Math.min(Math.max(pasos.length, 1), 4);
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class="seccion banda-primario proceso">
+      <div class="contenedor">
+        <Titular partido antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto}>
+          {s.cta && <a class="btn" href={s.cta.url}>{s.cta.texto}</a>}
+        </Titular>
+      </div>
+      {pasos.length > 0 && (
+        <>
+          <div class="cinta" aria-hidden="true" />
+          <div class="contenedor">
+            <ol class="pasos" style={`--cols:${cols}`}>
+              {pasos.map((p, i) => (
+                <li class="paso">
+                  <p class="paso-num">{String(i + 1).padStart(2, '0')}</p>
+                  <div>
+                    <h3 class="paso-titulo">
+                      <Icono nombre={p.icono || 'check'} tam={22} class="paso-icono" />
+                      {p.titulo}
+                    </h3>
+                    {p.texto && <p class="paso-texto">{p.texto}</p>}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .cinta { display: none; }
+  .pasos { display: grid; gap: 0; position: relative; padding-left: 1.75rem; }
+  /* Regla vertical en móvil */
+  .pasos::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px;
+    background:
+      repeating-linear-gradient(to bottom, color-mix(in srgb, currentColor 70%, transparent) 0 1.5px, transparent 1.5px 60px) left top / 14px 100% no-repeat,
+      repeating-linear-gradient(to bottom, color-mix(in srgb, currentColor 45%, transparent) 0 1px, transparent 1px 12px) left top / 7px 100% no-repeat;
+    border-left: 1.5px solid color-mix(in srgb, currentColor 70%, transparent); }
+  .paso { display: grid; gap: .5rem; align-content: start; padding-bottom: 2.25rem; }
+  .paso:last-child { padding-bottom: 0; }
+  .paso-num { font-family: var(--fuente-titulos); font-style: italic; font-size: 3.25rem; line-height: 1; color: color-mix(in srgb, var(--c-acento) 50%, var(--sobre-primario)); }
+  .paso-titulo { display: flex; align-items: center; gap: .6rem; font-size: 1.65rem; }
+  .paso :global(.paso-icono) { flex-shrink: 0; opacity: .8; }
+  .paso-texto { margin-top: .55rem; opacity: .88; max-width: 30rem; }
+  @media (min-width: 900px) {
+    .cinta { display: block; height: 26px; margin-bottom: 2.75rem; border-top: 1.5px solid color-mix(in srgb, currentColor 70%, transparent);
+      background:
+        repeating-linear-gradient(to right, color-mix(in srgb, currentColor 70%, transparent) 0 1.5px, transparent 1.5px 60px) left top / 100% 26px no-repeat,
+        repeating-linear-gradient(to right, color-mix(in srgb, currentColor 45%, transparent) 0 1px, transparent 1px 12px) left top / 100% 12px no-repeat; }
+    .pasos { grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: 2.5rem; padding-left: 0; }
+    .pasos::before { display: none; }
+    .paso { padding-bottom: 0; gap: 1rem; }
+    .paso-num { font-size: clamp(3.5rem, 5vw, 5rem); }
+  }
+</style>

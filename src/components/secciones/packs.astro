@@ -1,0 +1,80 @@
+---
+// Packs con precio de partida: banda de agua con juntas de azulejo a todo el ancho. Titular partido (con `cta`
+// opcional) y los packs en columnas separadas por juntas verticales (3/2/1), sin tarjetas flotando.
+// `packs: [{nombre, texto, precio, incluye, duracion, destacado}]`: `precio` opcional («desde 6.900 €»; vacío =
+// no se pinta), `incluye` separado por «;» (lista con marcas), `duracion` con reloj, y el `destacado` va en
+// verde agua pleno con la etiqueta `etiqueta_destacado` («El más pedido»). Cada pack lleva un botón al
+// formulario (`cta.url`, o #presupuesto) con el texto de `boton_pack` o del `cta`. Sin packs, solo el titular.
+import { seccion, partes } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const lista = s ? s.packs.filter((p) => p && p.nombre) : [];
+const etiqueta = (s?.etiqueta_destacado as string) || '';
+const destino = s?.cta?.url || '#presupuesto';
+const boton = (s?.boton_pack as string) || s?.cta?.texto || '';
+---
+
+{
+  s && (
+    <section id={id} class="seccion banda-agua azulejo">
+      <div class="contenedor">
+        <Titular partido antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+        {lista.length > 0 && (
+          <ul class:list={['packs', `packs--${Math.min(lista.length, 3)}`]}>
+            {lista.map((p) => (
+              <li class:list={['pack', { 'pack--destacado banda-primario': p.destacado }]}>
+                {p.destacado && etiqueta && <p class="pack-etiqueta">{etiqueta}</p>}
+                {p.duracion && (
+                  <p class="pack-duracion"><Icono nombre="reloj" tam={17} />{p.duracion}</p>
+                )}
+                <h3 class="pack-nombre">{p.nombre}</h3>
+                {p.texto && <p class="pack-texto">{p.texto}</p>}
+                {partes(p.incluye).length > 0 && (
+                  <ul class="pack-incluye">
+                    {partes(p.incluye).map((x) => (
+                      <li><Icono nombre="check" tam={18} class="pack-marca" />{x}</li>
+                    ))}
+                  </ul>
+                )}
+                <div class="pack-pie">
+                  {p.precio && <p class="pack-precio">{p.precio}</p>}
+                  {boton && <a class="btn" href={destino}>{boton}</a>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .packs { display: grid; border-top: 1px solid var(--linea); }
+  .pack { position: relative; display: flex; flex-direction: column; padding: 2.25rem 0 2.5rem; border-bottom: 1px solid var(--linea); }
+  .pack--destacado { margin-inline: -1rem; padding-inline: 1rem; border-bottom: 0; }
+  .pack-etiqueta { position: absolute; top: 0; right: 1rem; padding: .3rem .75rem; border-radius: 0 0 var(--radio) var(--radio); background: var(--c-acento); color: var(--sobre-acento); font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .pack-duracion { display: inline-flex; align-items: center; gap: .45rem; font-size: .88rem; font-weight: 600; opacity: .8; }
+  .pack-nombre { margin-top: .8rem; font-size: clamp(1.9rem, 2.8vw, 2.5rem); }
+  .pack-texto { margin-top: .75rem; opacity: .85; max-width: 32rem; }
+  .pack-incluye { display: grid; gap: .55rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px dashed color-mix(in srgb, currentColor 28%, transparent); font-size: .98rem; }
+  .pack-incluye li { display: flex; gap: .6rem; align-items: flex-start; }
+  .pack-incluye :global(.pack-marca) { flex-shrink: 0; margin-top: .2rem; color: var(--raya); }
+  .pack-pie { display: grid; gap: 1.1rem; justify-items: start; margin-top: auto; padding-top: 2rem; }
+  .pack-precio { font-family: var(--fuente-titulos); font-size: clamp(2rem, 3.2vw, 2.75rem); line-height: 1; letter-spacing: -0.02em; }
+  @media (min-width: 768px) {
+    .packs--2, .packs--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 0; }
+    .pack { padding: 2.75rem 2rem 3rem; border-bottom: 0; border-left: 1px solid var(--linea); }
+    .pack--destacado { margin: 0; border-left-color: transparent; }
+    .pack-etiqueta { right: 2rem; }
+  }
+  @media (min-width: 1100px) {
+    .packs--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .pack { padding: 3.25rem 2.5rem 3.25rem; }
+    .pack:last-child { border-right: 1px solid var(--linea); }
+    .pack--destacado:last-child { border-right-color: transparent; }
+  }
+</style>

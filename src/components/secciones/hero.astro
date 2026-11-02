@@ -1,0 +1,100 @@
+---
+// Portada a pantalla completa: foto del baño reformado a sangre de borde a borde y, abajo a la izquierda, un panel
+// blanco que toca el borde izquierdo y el inferior de la ventana (con el listón de madera encima): antetítulo con
+// cota, título enorme en serif fina, texto, `cta`, botón de WhatsApp (si hay contacto.whatsapp), `cta_secundario`
+// como enlace y `items` (titulo, icono) como garantías. `destacado: {titulo, texto}` es la nota de quién hace la
+// obra («Soy Rubén…»), en una placa oscura sobre la foto. En móvil: foto arriba y panel debajo, a todo el ancho.
+// Sin foto, el hueco queda en verde agua hondo con juntas de azulejo. Campos vacíos: no se pintan.
+import { seccion, site, whatsapp } from '../../data/site';
+import { altHero } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const puntos = s ? s.items.filter((it) => it && it.titulo) : [];
+const wa = whatsapp(site.contacto.whatsapp, 'Hola, quería pedir presupuesto para una reforma.');
+---
+
+{
+  s && (
+    <section id={id} class="hero-rb">
+      <div class:list={['hero-foto-caja banda-hondo', { azulejo: !s.imagen }]}>
+        {s.imagen && <Imagen src={s.imagen} alt={altHero()} ancho={1920} alto={1080} prioridad={primera} class="hero-foto" />}
+        <div class="hero-velo" aria-hidden="true" />
+        {s.destacado && (
+          <aside class="hero-nota">
+            <span class="liston" aria-hidden="true" />
+            {s.destacado.titulo && <p class="hero-nota-titulo">{s.destacado.titulo}</p>}
+            {s.destacado.texto && <p class="hero-nota-texto">{s.destacado.texto}</p>}
+          </aside>
+        )}
+      </div>
+      <div class="hero-panel banda-clara">
+        <span class="liston hero-liston" aria-hidden="true" />
+        <div class="hero-panel-cuerpo">
+          {s.antetitulo && <p class="antetitulo">{s.antetitulo}</p>}
+          {s.titulo && <h1 class="hero-titulo">{s.titulo}</h1>}
+          {s.texto && <p class="hero-parrafo">{s.texto}</p>}
+          {(s.cta || wa || s.cta_secundario) && (
+            <div class="hero-acciones">
+              {s.cta && (
+                <a class="btn" href={s.cta.url}>
+                  {s.cta.texto}
+                  <Icono nombre="flecha" tam={20} class="flecha" />
+                </a>
+              )}
+              {wa && (
+                <a class="btn-sec" href={wa} rel="noopener" target="_blank">
+                  <Icono nombre="whatsapp" tam={20} />
+                  WhatsApp
+                </a>
+              )}
+              {s.cta_secundario && <a class="enlace-subrayado" href={s.cta_secundario.url}>{s.cta_secundario.texto}</a>}
+            </div>
+          )}
+          {puntos.length > 0 && (
+            <ul class="hero-puntos">
+              {puntos.map((it) => (
+                <li>
+                  <span class="pieza"><Icono nombre={it.icono || 'check'} tam={18} /></span>
+                  {it.titulo}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .hero-rb { position: relative; display: flex; flex-direction: column; min-height: 85svh; }
+  .hero-foto-caja { position: relative; overflow: hidden; min-height: max(20rem, 50svh); }
+  .hero-foto-caja :global(.hero-foto) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero-velo { position: absolute; inset: 0; background: linear-gradient(to bottom, color-mix(in srgb, var(--hondo-2) 55%, transparent) 0, transparent 9rem); pointer-events: none; }
+  .hero-nota { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; max-width: 22rem; padding: 1rem 1.1rem 1.1rem; border-radius: var(--radio); overflow: hidden; background: color-mix(in srgb, var(--hondo-2) 86%, transparent); color: #ffffff; backdrop-filter: blur(6px); }
+  .hero-nota .liston { position: absolute; inset: 0 0 auto 0; height: 4px; }
+  .hero-nota-titulo { font-family: var(--fuente-titulos); font-size: 1.3rem; line-height: 1.15; }
+  .hero-nota-texto { margin-top: .35rem; font-size: .93rem; line-height: 1.45; opacity: .88; }
+  .hero-panel { position: relative; flex: 1; }
+  .hero-liston { position: absolute; inset: 0 0 auto 0; }
+  .hero-panel-cuerpo { padding: 2.5rem 1rem 3rem; }
+  .hero-titulo { margin-top: 1.1rem; font-size: clamp(2.6rem, 6.6vw, 6.4rem); line-height: .98; letter-spacing: -0.025em; max-width: 14ch; }
+  .hero-parrafo { margin-top: 1.4rem; font-size: clamp(1.08rem, 1.4vw, 1.25rem); max-width: 36rem; opacity: .85; }
+  .hero-acciones { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; margin-top: 2rem; }
+  .hero-puntos { display: grid; gap: .8rem; margin-top: 2.25rem; padding-top: 1.5rem; border-top: 1px solid var(--linea); }
+  .hero-puntos li { display: flex; align-items: center; gap: .75rem; font-weight: 600; }
+  @media (min-width: 640px) { .hero-puntos { display: flex; flex-wrap: wrap; gap: .9rem 2rem; } }
+  @media (min-width: 768px) { .hero-panel-cuerpo { padding: 3rem 2rem 3.5rem; } }
+  @media (min-width: 1024px) {
+    .hero-rb { min-height: 100svh; justify-content: flex-end; }
+    .hero-foto-caja { position: absolute; inset: 0; min-height: 0; }
+    .hero-nota { left: auto; right: clamp(1.5rem, 3vw, 3rem); bottom: auto; top: calc(var(--alto-cabecera) + 2.5rem); width: 21rem; padding: 1.4rem 1.5rem 1.5rem; }
+    .hero-nota-titulo { font-size: 1.5rem; }
+    .hero-panel { flex: 0 0 auto; width: min(60rem, 64%); margin-top: calc(var(--alto-cabecera) + 4rem); }
+    .hero-panel-cuerpo { padding: 3.5rem clamp(2.5rem, 4vw, 4.5rem) 3.25rem max(2rem, calc((100vw - var(--ancho)) / 2 + 2rem)); }
+    .hero-liston { right: 0; }
+  }
+</style>
