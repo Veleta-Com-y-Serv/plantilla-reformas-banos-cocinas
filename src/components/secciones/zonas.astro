@@ -1,10 +1,11 @@
 ---
 // Zonas de trabajo: banda clara a todo el ancho. A la izquierda, titular, `texto` y `cta`; a la derecha, las
 // localidades (`items: [{titulo}]`) en serif grande, seguidas y separadas por una pieza de azulejo pequeña, como
-// una lista de rótulos. Con `imagen`, la foto va debajo a sangre en una franja panorámica. Las primeras 8
+// una lista de rótulos (las localidades con `texto` tienen página propia en /zonas/<slug>/ y son enlaces). Con `imagen`, la foto va debajo a sangre en una franja panorámica. Las primeras 8
 // localidades salen también en el pie. Sin localidades, solo el titular.
 import { seccion } from '../../data/site';
 import { altSeccion } from '../../lib/seo';
+import { enlaceDe } from '../../lib/paginas';
 import Titular from '../ui/Titular.astro';
 import Imagen from '../ui/Imagen.astro';
 interface Props { id: string }
@@ -23,7 +24,7 @@ const pueblos = s ? s.items.filter((it) => it && it.titulo) : [];
           </div>
           {pueblos.length > 0 && (
             <ul class="rotulos">
-              {pueblos.map((p) => <li>{p.titulo}</li>)}
+              {pueblos.map((p) => <li>{enlaceDe(p) ? <a href={enlaceDe(p)} class="rotulo-enlace">{p.titulo}</a> : p.titulo}</li>)}
             </ul>
           )}
         </div>
@@ -43,6 +44,8 @@ const pueblos = s ? s.items.filter((it) => it && it.titulo) : [];
   .rotulos { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1.1rem; font-family: var(--fuente-titulos); font-size: clamp(1.55rem, 3.2vw, 2.6rem); line-height: 1.25; }
   .rotulos li { display: inline-flex; align-items: center; gap: 1.1rem; }
   .rotulos li:not(:last-child)::after { content: ""; width: .5rem; height: .5rem; border-radius: 2px; background: var(--c-acento); transform: rotate(45deg); }
+  .rotulo-enlace { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .2em; text-decoration-color: color-mix(in srgb, var(--c-primario) 45%, transparent); }
+  .rotulo-enlace:hover { text-decoration-color: currentColor; }
   .rotulos li:nth-child(3n + 1) { font-style: italic; color: var(--c-primario); }
   .zonas-franja { position: relative; height: clamp(12rem, 28vw, 24rem); overflow: hidden; }
   .zonas-franja :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }

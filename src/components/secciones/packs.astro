@@ -5,9 +5,12 @@
 // no se pinta), `incluye` separado por «;» (lista con marcas), `duracion` con reloj, y el `destacado` va en
 // verde agua pleno con la etiqueta `etiqueta_destacado` («El más pedido»). Cada pack lleva un botón al
 // formulario (`cta.url`, o #presupuesto) con el texto de `boton_pack` o del `cta`. Sin packs, solo el titular.
+// Los packs con `detalle` tienen página propia (/reformas/<slug>/): el nombre es el enlace y la columna entera
+// es clicable (el botón del formulario sigue por encima); los demás quedan como antes.
 import { seccion, partes } from '../../data/site';
 import Titular from '../ui/Titular.astro';
 import Icono from '../ui/Icono.astro';
+import { enlaceDe } from '../../lib/paginas';
 interface Props { id: string }
 const { id } = Astro.props;
 const s = seccion(id);
@@ -30,7 +33,7 @@ const boton = (s?.boton_pack as string) || s?.cta?.texto || '';
                 {p.duracion && (
                   <p class="pack-duracion"><Icono nombre="reloj" tam={17} />{p.duracion}</p>
                 )}
-                <h3 class="pack-nombre">{p.nombre}</h3>
+                <h3 class="pack-nombre">{enlaceDe(p) ? <a href={enlaceDe(p)} class="pack-enlace">{p.nombre}</a> : p.nombre}</h3>
                 {p.texto && <p class="pack-texto">{p.texto}</p>}
                 {partes(p.incluye).length > 0 && (
                   <ul class="pack-incluye">
@@ -41,6 +44,7 @@ const boton = (s?.boton_pack as string) || s?.cta?.texto || '';
                 )}
                 <div class="pack-pie">
                   {p.precio && <p class="pack-precio">{p.precio}</p>}
+                  {enlaceDe(p) && <span class="pack-ver" aria-hidden="true">Ver más <Icono nombre="flecha" tam={16} /></span>}
                   {boton && <a class="btn" href={destino}>{boton}</a>}
                 </div>
               </li>
@@ -63,6 +67,12 @@ const boton = (s?.boton_pack as string) || s?.cta?.texto || '';
   .pack-incluye { display: grid; gap: .55rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px dashed color-mix(in srgb, currentColor 28%, transparent); font-size: .98rem; }
   .pack-incluye li { display: flex; gap: .6rem; align-items: flex-start; }
   .pack-incluye :global(.pack-marca) { flex-shrink: 0; margin-top: .2rem; color: var(--raya); }
+  .pack-enlace { text-decoration: none; }
+  .pack-enlace::after { content: ""; position: absolute; inset: 0; }
+  .pack-enlace:focus-visible { outline: none; }
+  .pack:has(.pack-enlace:focus-visible) { outline: 3px solid var(--raya); outline-offset: -3px; }
+  .pack-ver { display: inline-flex; align-items: center; gap: .3rem; font-weight: 650; text-decoration: underline; text-underline-offset: 4px; }
+  .pack-pie .btn { position: relative; z-index: 1; }
   .pack-pie { display: grid; gap: 1.1rem; justify-items: start; margin-top: auto; padding-top: 2rem; }
   .pack-precio { font-family: var(--fuente-titulos); font-size: clamp(2rem, 3.2vw, 2.75rem); line-height: 1; letter-spacing: -0.02em; }
   @media (min-width: 768px) {

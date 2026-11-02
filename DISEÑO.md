@@ -66,3 +66,10 @@ repo: es lo que lee quien (persona o agente) rediseñe la plantilla.
 - **Qué no hacer**: tarjetas blancas flotando en una caja estrecha; discos, soles y bordes curvos (son de
   `energia-solar`); sans pesada en los títulos; precios, plazos o cifras fijos en los componentes (van en
   `site.yaml`); hablar en plural de empresa; fotos de personas.
+
+## Páginas propias (fichas y zonas)
+Con la misma piel que la portada: cabecera y pie de la plantilla, migas (Inicio › Sección › Elemento), hero con la foto del
+elemento (sin foto, su icono), `detalle` en párrafos, tabla de datos, caja de contacto, galería (`imagenes`) y otros elementos
+de la misma lista; en las zonas, entrada, texto de la zona, servicios, trabajos del lugar, opiniones y contacto.
+
+Diseño de estas páginas: ficha con banda de agua y juntas de azulejo, título en serif con cota, foto con arco de hornacina (sin foto, pieza grande en verde agua con su icono), cuerpo en banda clara con «Qué incluye», tabla de datos y caja de presupuesto en verde agua; otras reformas en banda de agua. La zona abre con banda hondo con azulejo, sigue con packs en agua, trabajos del lugar, opiniones en madera suave y banda final verde agua.

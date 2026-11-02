@@ -59,9 +59,42 @@ secciones:
     etiqueta_destacado: El más pedido
     cta: { texto: Pedir presupuesto, url: "/#presupuesto" }
     packs:
-      - { nombre: Baño completo, texto: "Lo quito todo y lo dejo nuevo: azulejo, suelo, sanitarios, mueble y ducha o bañera.", precio: "desde 6.900 €", incluye: "Retirada de escombros; Alicatado y solado; Plato de ducha o bañera; Mueble de lavabo y espejo; Fontanería y electricidad nuevas; Limpieza final", duracion: "8-10 días laborables", destacado: true }
-      - { nombre: Cocina completa, texto: "Muebles a medida, encimera y una distribución pensada para cómo cocinas tú.", precio: "desde 9.500 €", incluye: "Diseño en 3D; Muebles a medida; Encimera de cuarzo o porcelánico; Alicatado o pintura; Instalación de electrodomésticos; Luz bajo muebles", duracion: "3 semanas", destacado: false }
-      - { nombre: Cambio de bañera por ducha, texto: "Fuera la bañera y en su sitio un plato extraplano con mampara. Sin tocar el resto del baño.", precio: "desde 1.490 €", incluye: "Retirada de la bañera; Plato extraplano antideslizante; Mampara de vidrio; Azulejo de reposición; Grifería termostática", duracion: "1 día", destacado: false }
+      - nombre: Baño completo
+        texto: "Lo quito todo y lo dejo nuevo: azulejo, suelo, sanitarios, mueble y ducha o bañera."
+        precio: "desde 6.900 €"
+        incluye: "Retirada de escombros; Alicatado y solado; Plato de ducha o bañera; Mueble de lavabo y espejo; Fontanería y electricidad nuevas; Limpieza final"
+        duracion: "8-10 días laborables"
+        destacado: true
+        detalle: |
+          Es la reforma para cuando el baño ya no da más de sí: azulejos pasados, sanitarios cansados o una distribución que molesta cada mañana. Lo vacío por completo, repaso paredes y suelo y lo dejo listo para empezar de cero.
+
+          Después llega lo que no se ve y más importa: fontanería y electricidad nuevas, impermeabilizado donde toca y alicatado y solado bien nivelados. Luego van el plato de ducha o la bañera, el mueble de lavabo con su espejo y la grifería, todo elegido contigo antes de empezar, sobre muestras reales.
+
+          Trabajo yo mismo y con gente de confianza, protejo el portal y los pasillos y cada tarde dejo la obra barrida. Al terminar hago una limpieza final y repasamos juntos cada rincón. Recibes el precio por escrito antes de empezar y no cambia si no cambias tú el encargo.
+      - nombre: Cocina completa
+        texto: "Muebles a medida, encimera y una distribución pensada para cómo cocinas tú."
+        precio: "desde 9.500 €"
+        incluye: "Diseño en 3D; Muebles a medida; Encimera de cuarzo o porcelánico; Alicatado o pintura; Instalación de electrodomésticos; Luz bajo muebles"
+        duracion: "3 semanas"
+        destacado: false
+        detalle: |
+          Una cocina se usa todos los días y por eso merece pensarse bien. Empiezo por preguntarte cómo cocinas, cuántos sois en casa y qué te estorba hoy, y con eso dibujo la distribución en 3D para que veas el resultado antes de comprar nada.
+
+          Los muebles se hacen a medida para aprovechar cada hueco, con la encimera que mejor encaje contigo, de cuarzo o porcelánico. Me encargo del alicatado o de la pintura, de la instalación eléctrica y de fontanería, y de colocar los electrodomésticos. La luz bajo los muebles remata el trabajo y se agradece cada noche.
+
+          Te explico cada fase, los plazos y qué decisiones te tocan en cada momento, para que no haya sorpresas. La obra queda protegida y limpia, y al final revisamos juntos puertas, cajones y encimera hasta que todo esté a tu gusto.
+      - nombre: Cambio de bañera por ducha
+        texto: "Fuera la bañera y en su sitio un plato extraplano con mampara. Sin tocar el resto del baño."
+        precio: "desde 1.490 €"
+        incluye: "Retirada de la bañera; Plato extraplano antideslizante; Mampara de vidrio; Azulejo de reposición; Grifería termostática"
+        duracion: "1 día"
+        destacado: false
+        detalle: |
+          Pensado para quien ya no quiere pasar por encima del borde de la bañera: personas mayores, familias con prisa por las mañanas o quien simplemente prefiere una ducha amplia. Se cambia solo lo necesario y el resto del baño se queda como está.
+
+          Retiro la bañera, preparo la base y coloco un plato extraplano antideslizante con su mampara de vidrio y una grifería termostática que mantiene la temperatura. Reparo el azulejo de la zona con material de reposición para que la pared quede uniforme y sin parches a la vista.
+
+          Es una obra rápida y ordenada: se hace en una sola jornada, con la zona protegida y los escombros fuera de casa al terminar. Puedes volver a ducharte esa misma noche, tras el tiempo de secado que te indico, y te dejo por escrito las pautas de cuidado.
 
   trabajos:
     activa: true
@@ -114,16 +147,22 @@ secciones:
 
   zonas:
     activa: true
+    titulo_pagina: "Reformas de baños y cocinas en {zona}"
     antetitulo: Dónde trabajo
     titulo: Móstoles y el sur de Madrid
     texto: "Vivo en Móstoles y trabajo a menos de media hora en coche. Si tu pueblo no está, pregúntame."
     items:
-      - { titulo: Móstoles }
-      - { titulo: Alcorcón }
-      - { titulo: Fuenlabrada }
-      - { titulo: Villaviciosa de Odón }
+      - titulo: Móstoles
+        texto: "Es mi casa y donde más obras he hecho: pisos de los setenta y ochenta con baños pequeños y cocinas cerradas que piden aire. Conozco bien las comunidades del municipio y sus normas de obras, así que aviso a los vecinos y organizo horarios para molestar lo menos posible. Trabajo también en los barrios cercanos y en los pueblos de alrededor. Si vives por aquí, la visita para medir y calcular el presupuesto la hago encantado."
+      - titulo: Alcorcón
+        texto: "En Alcorcón reformo sobre todo cocinas de piso que se abren al salón y baños que necesitan más luz y mejor aprovechamiento del espacio. Muchas viviendas son de la misma época y tienen instalaciones parecidas, de modo que sé de antemano qué suele aparecer al abrir la pared. Voy a medir sin coste, te propongo opciones y, si te encaja, te dejo el precio por escrito. También atiendo a vecinos de Móstoles y Leganés."
+      - titulo: Fuenlabrada
+        texto: "Aquí tengo muchos encargos de cambio de bañera por ducha para familias que quieren un baño más cómodo y seguro, además de reformas completas de aseos y cocinas. Es una obra limpia y rápida en la que cuido cada detalle de la protección del portal y de los pasillos. Atiendo Fuenlabrada y los municipios que la rodean, y te explico con calma qué se puede hacer según el estado de tu baño actual."
+      - titulo: Villaviciosa de Odón
+        texto: "En Villaviciosa de Odón abundan las casas con cocinas amplias y mucho uso familiar, donde un buen diseño marca la diferencia. Me encargo de pensar la distribución, de fabricar los muebles a medida y de coordinar la instalación completa, con una mesa o un office si hay sitio. Trabajo también en Boadilla del Monte y en Alcorcón, y voy a ver tu casa antes de preparar el presupuesto cerrado."
       - { titulo: Arroyomolinos }
-      - { titulo: Navalcarnero }
+      - titulo: Navalcarnero
+        texto: "Navalcarnero tiene muchas viviendas que se alquilan o que cambian de inquilinos, y allí hago reformas rápidas y resistentes, con materiales fáciles de limpiar y que aguantan el uso diario. También reformo cocinas y baños de casas de familia que quieren renovarse por completo. Cubro Navalcarnero y los pueblos de alrededor, como Arroyomolinos o Humanes de Madrid, y te atiendo con visita de medición gratuita."
       - { titulo: Leganés }
       - { titulo: Boadilla del Monte }
       - { titulo: Humanes de Madrid }
